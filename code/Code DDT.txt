@@ -1,0 +1,58 @@
+package automation_day1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import java.io.File;
+import jxl.Sheet;
+import jxl.Workbook;
+
+public class Sample9 {
+	Workbook wb;
+	Sheet sh;
+	int numrow;
+	WebDriver driver;
+	@BeforeTest
+	public void setup() {
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Pravin Belwalkar\\Desktop\\Selenium\\chromedriver_win32\\chromedriver.exe");
+		driver =new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.webmath.com/");
+		driver.findElement(By.xpath("//*[@id=\"navBox-3\"]/a")).click();
+		driver.findElement(By.xpath("//*[@id=\"d-childMainContLeft\"]/div[3]/table/tbody/tr/td/table/tbody/tr[1]/td[1]/font/font/a[3]")).click();
+		
+	}
+	@Test (dataProvider ="testdata")
+	public void TestFB(String a, String b) {
+		driver.findElement(By.name("n1")).clear();
+		driver.findElement(By.name("n1")).sendKeys(a);
+		driver.findElement(By.name("n2")).clear();
+		driver.findElement(By.name("n2")).sendKeys(b);
+	}
+	@DataProvider (name="testdata")
+	public Object[][] TestDataFeed(){
+		try {
+		wb =Workbook.getWorkbook(new File("C:\\Users\\Pravin Belwalkar\\Desktop\\Book1.xls"));	
+		sh =wb.getSheet(0);
+		numrow =sh.getRows();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		Object [][] data =new Object[numrow][sh.getColumns()];
+		for (int i=0; i<numrow;i++) {
+			data[i][0]=sh.getCell(0,i).getContents();
+		data [i][1]	= sh.getCell(1,i).getContents();
+		}
+		return data;
+	}
+	@AfterTest
+public void Teardown() {
+	driver.quit();
+}
+}

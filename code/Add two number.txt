@@ -1,0 +1,26 @@
+package automation_day1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Sample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+System.setProperty("webdriver.chrome.driver", "C:\\Users\\Pravin Belwalkar\\Desktop\\Selenium\\chromedriver_win32\\chromedriver.exe");
+WebDriver driver =new ChromeDriver();
+driver.manage().window().maximize();
+driver.get("https://www.webmath.com/");
+driver.findElement(By.xpath("//*[@id=\"navBox-3\"]/a")).click();
+driver.findElement(By.xpath("//*[@id=\"d-childMainContLeft\"]/div[3]/table/tbody/tr/td/table/tbody/tr[1]/td[1]/font/font/a[1]")).click();
+driver.findElement(By.name("n1")).sendKeys("5");
+driver.findElement(By.name("n2")).sendKeys("6");
+driver.findElement(By.xpath("//*[@id=\"d-childMainContLeft\"]/div[2]/table/tbody/tr/td[2]/center/form/input[5]")).click();
+driver.close();
+
+	
+	
+	}
+
+}
